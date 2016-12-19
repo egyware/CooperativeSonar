@@ -21,7 +21,6 @@ SerialCommand sCmd;
 NewPing sonar(2,3);
 
 int distanceMap[33];
-int distanceAux;
 
 void unrecognized(const char *command)
 {
