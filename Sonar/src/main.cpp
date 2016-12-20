@@ -4,6 +4,9 @@
 #include <SerialCommand.h>
 //#include <TimerOne.h>
 
+#include "DetectedObject.h"
+#include "FixedList.h"
+
 #define CMD_HELLO ":HELLO"
 #define CMD_ERROR ":ERROR"
 #define CMD_SERVO ":SERVO"
@@ -15,12 +18,15 @@
 #define ENDLINE "\r\n"
 
 #define DISTANCEMAP_LEN 33 //todo calza
+#define DETECTEDOBJECTS_LEN 17 //solo vamos a guardar en memoria 17.
 
 Servo servo;
 SerialCommand sCmd;
 NewPing sonar(2,3);
 
-int distanceMap[33];
+int distanceMap[DISTANCEMAP_LEN];
+FixedList<DetectedObject, DETECTEDOBJECTS_LEN> detectedObjects;
+
 
 void unrecognized(const char *command)
 {
