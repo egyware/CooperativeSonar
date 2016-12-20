@@ -14,7 +14,7 @@
 #define CMD_SONAR ":SONAR"
 #define CMD_SCAN  ":SCAN"
 #define CMD_RANGE ":RANGE"
-#define CMD_OBJ ":OBJ"
+#define CMD_DETECTED ":DETECTED"
 #define ENDLINE "\r\n"
 
 #define DISTANCEMAP_LEN 33 //todo calza
@@ -65,12 +65,29 @@ void cmd_servo()
 
 void cmd_scan()
 {
-  for(int i=0;i<DISTANCEMAP_LEN-1;i++)
+  //escanear a la derecha
+  for(int i=DISTANCEMAP_LEN/2;i<DISTANCEMAP_LEN;i++)
   {
     servo.write(15+i*5);
     delay(200);
     distanceMap[i] = sonar.ping_cm();
   }
+  //escanear a la izquierda, talvez sea a la derecha pero meh...
+  for(int i=DISTANCEMAP_LEN-1;i>=0;i--)
+  {
+    servo.write(15+i*5);
+    delay(200);
+    distanceMap[i] = sonar.ping_cm();
+  }
+  //volver al centro
+  for(int i=0; i <DISTANCEMAP_LEN/2;i++)
+  {
+    servo.write(15+i*5);
+    delay(200);
+    distanceMap[i] = sonar.ping_cm();
+  }
+
+  //iniciar la seperación de objetos aqui..
   Serial.print(CMD_SCAN);
   Serial.print(' ');
   for(int i=0;i<DISTANCEMAP_LEN-2;i++)
@@ -92,6 +109,9 @@ void setup()
   sCmd.addCommand(CMD_SERVO, cmd_servo);
   sCmd.addCommand(CMD_SCAN,  cmd_scan);
   sCmd.setDefaultHandler(unrecognized);
+
+  //seteo todo a 0
+  memset(&distanceMap, 0, sizeof(distanceMap));
 }
 
 void loop()
