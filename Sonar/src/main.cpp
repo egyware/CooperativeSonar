@@ -14,7 +14,7 @@
 #define CMD_SONAR ":SONAR"
 #define CMD_SCAN  ":SCAN"
 #define CMD_RANGE ":RANGE"
-#define CMD_DETECTED ":DETECTED"
+#define CMD_OBJ ":OBJ"
 #define ENDLINE "\r\n"
 
 #define DISTANCEMAP_LEN 33 //todo calza
@@ -24,7 +24,7 @@ Servo servo;
 SerialCommand sCmd;
 NewPing sonar(2,3);
 
-int distanceMap[DISTANCEMAP_LEN];
+unsigned int distanceMap[DISTANCEMAP_LEN];
 FixedList<DetectedObject, DETECTEDOBJECTS_LEN> detectedObjects;
 
 
@@ -87,16 +87,45 @@ void cmd_scan()
     distanceMap[i] = sonar.ping_cm();
   }
 
-  //iniciar la seperación de objetos aqui..
+  detectedObjects.clear();
+  int start = 0, end = 0; //variables auxiliares.
+  for(int i=0;i<DISTANCEMAP_LEN-1;i++)
+  {
+    if(distanceMap[i] == 0) //si es 0, continuar.
+    {
+      start = i;
+      continue;
+    }
+    if(abs(distanceMap[i] - distanceMap[i+1]) > 15) //mayor a 15?
+    {
+      end = i;
+      DetectedObject obj(start,end);
+      detectedObjects.add(obj);
+      start = i+1;
+    }
+  }
+
   Serial.print(CMD_SCAN);
   Serial.print(' ');
-  for(int i=0;i<DISTANCEMAP_LEN-2;i++)
+  for(int i=0;i<DISTANCEMAP_LEN-1;i++)
   {
     Serial.print(distanceMap[i]);
     Serial.print(' ');
   }
   Serial.print(distanceMap[DISTANCEMAP_LEN-1]);
   Serial.print(ENDLINE);
+
+  for(unsigned int i = 0; i < detectedObjects.lastIndex; i++)
+  {
+      DetectedObject &obj = detectedObjects.array[i];
+      obj.centroide(distanceMap);
+      Serial.print(CMD_OBJ);
+      Serial.print(' ');
+      Serial.print(obj.distance);
+      Serial.print(' ');
+      Serial.print(obj.angle);
+      Serial.print(ENDLINE);
+  }
 }
 
 void setup()

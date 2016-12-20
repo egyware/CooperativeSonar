@@ -22,7 +22,7 @@ struct DetectedObject
      endIndex   = end;
   }
 
-  void centroide(int *distanceMap)
+  void centroide(unsigned int *distanceMap)
   {
     distance = 0;
     angle = (endIndex - startIndex + 1)/2 * 5;

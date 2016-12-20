@@ -9,7 +9,7 @@ template <typename T, unsigned int N>
 struct FixedList
 {
     T array[N];
-    int lastIndex;
+    unsigned int lastIndex;
 
     FixedList()
     {
@@ -20,6 +20,7 @@ struct FixedList
     {
        if(lastIndex >= N) return false;
        array[lastIndex++] = t;
+       return true;
     }
 
     void clear()
