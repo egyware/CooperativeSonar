@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <limits.h>
 #include <Servo.h>
 #include <NewPing.h>
 #include <SerialCommand.h>
@@ -70,28 +71,32 @@ void cmd_scan()
   {
     servo.write(15+i*5);
     delay(200);
-    distanceMap[i] = sonar.ping_cm();
+    unsigned int ping = sonar.ping_cm();
+    distanceMap[i] = (ping != 0)?ping:UINT_MAX;
+
   }
   //escanear a la izquierda, talvez sea a la derecha pero meh...
   for(int i=DISTANCEMAP_LEN-1;i>=0;i--)
   {
     servo.write(15+i*5);
     delay(200);
-    distanceMap[i] = sonar.ping_cm();
+    unsigned int ping = sonar.ping_cm();
+    distanceMap[i] = (ping != 0)?ping:UINT_MAX;
   }
   //volver al centro
   for(int i=0; i <DISTANCEMAP_LEN/2;i++)
   {
     servo.write(15+i*5);
     delay(200);
-    distanceMap[i] = sonar.ping_cm();
+    unsigned int ping = sonar.ping_cm();
+    distanceMap[i] = (ping != 0)?ping:UINT_MAX;
   }
 
   detectedObjects.clear();
   int start = 0, end = 0; //variables auxiliares.
   for(int i=0;i<DISTANCEMAP_LEN-1;i++)
   {
-    if(distanceMap[i] == 0) //si es 0, continuar.
+    if(distanceMap[i] == UINT_MAX) //si es 0, continuar.
     {
       start = i;
       continue;
