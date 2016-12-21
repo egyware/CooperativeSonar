@@ -25,7 +25,7 @@ struct DetectedObject
   void centroide(unsigned int *distanceMap)
   {
     distance = 0;
-    angle = (endIndex - startIndex + 1)/2 * 5;
+    angle = 15+(endIndex*5 + startIndex*5)/2; //recordar que la division es entera.
     for(int index = startIndex; index <= endIndex; index++)
     {
         distance = distance + distanceMap[index];
