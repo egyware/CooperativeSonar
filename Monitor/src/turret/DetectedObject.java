@@ -8,8 +8,9 @@ public class DetectedObject
 {
     public int distance;
     public int angle;
+    public int angleWidth;
 
-    DetectedObject(int d, int a) 
+    public DetectedObject(int d, int a, int angleWidth) 
     {
         this.distance = d;
         this.angle = a;        

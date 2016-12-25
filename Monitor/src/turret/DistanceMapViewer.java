@@ -23,7 +23,7 @@ public class DistanceMapViewer extends javax.swing.JFrame {
     private void initComponents() {
 
         jTextField1 = new javax.swing.JTextField();
-        jPanel1 = new DistanceMapCanvas();
+        jPanel1 = new MapCanvas();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -69,8 +69,8 @@ public class DistanceMapViewer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        ((DistanceMapCanvas)jPanel1).setMap(jTextField1.getText());
-        ((DistanceMapCanvas)jPanel1).repaint();        
+        ((MapCanvas)jPanel1).setMap(jTextField1.getText());
+        ((MapCanvas)jPanel1).repaint();        
     }//GEN-LAST:event_jTextField1ActionPerformed
 
   
