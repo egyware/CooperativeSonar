@@ -13,12 +13,14 @@ public class Program
     {
         System.setProperty("line.separator", "\r\n");
         
-        TurretServer server = new TurretServer();
+        MonitorWindow view = new MonitorWindow();
+        
+        TurretServer server = new TurretServer(view);
         server.start();
         
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new DistanceMapViewer().setVisible(true);
+            view.setVisible(true);
         });
     }
     

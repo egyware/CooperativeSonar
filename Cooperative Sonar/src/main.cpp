@@ -48,6 +48,7 @@ void setup()
   Serial.println();
 
   sCmdClient.addCommand(":NAME", cmd_name);
+  sCmdClient
 
   //client.connect("192.168.1.41", CLIENT_PORT);
   client.connect("192.168.1.15", CLIENT_PORT);
