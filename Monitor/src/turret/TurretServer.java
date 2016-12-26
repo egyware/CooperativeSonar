@@ -32,7 +32,7 @@ public class TurretServer extends Thread
         {
             server = new ServerSocket(7500);
             
-            listener.connectedTurret(new Turret(this, "asdasda", null));
+            //listener.connectedTurret(new Turret(this, "asdasda", null));
         
             while(true)
             {
