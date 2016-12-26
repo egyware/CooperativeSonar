@@ -176,9 +176,11 @@ void cmd_scan()
       obj.centroide(distanceMap);
       Serial.print(CMD_OBJ);
       Serial.print(' ');
-      Serial.print(obj.distance);
+      Serial.print(obj.distance); //distancia
       Serial.print(' ');
-      Serial.print(obj.angle);
+      Serial.print(obj.angle); //angulo
+      Serial.print(' ');
+      Serial.print(obj.endIndex - obj.startIndex); //ancho
       Serial.print(ENDLINE);
   }
 }
